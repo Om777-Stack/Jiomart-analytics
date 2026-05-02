@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bran-O · JioMart Distribution Intelligence · Lucknow May 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:       #08090d;
+  --surface:  #0f1117;
+  --card:     #13161f;
+  --card2:    #181c28;
+  --border:   rgba(255,255,255,0.07);
+  --border2:  rgba(255,255,255,0.13);
+  --txt:      #e8eaf0;
+  --txt2:     #7a8295;
+  --txt3:     #4a5168;
+  --accent:   #5b8fff;
+  --green:    #22d48a;
+  --green-bg: rgba(34,212,138,0.10);
+  --green-bd: rgba(34,212,138,0.22);
+  --amber:    #f5a623;
+  --amber-bg: rgba(245,166,35,0.10);
+  --amber-bd: rgba(245,166,35,0.22);
+  --red:      #ff5c5c;
+  --red-bg:   rgba(255,92,92,0.08);
+  --red-bd:   rgba(255,92,92,0.20);
+  --blue-dim: rgba(91,143,255,0.12);
+  --shadow:   0 8px 32px rgba(0,0,0,0.45);
+}
+[data-theme="light"] {
+  --bg:       #f0f4fb;
+  --surface:  #e8edf6;
+  --card:     #ffffff;
+  --card2:    #f5f8ff;
+  --border:   rgba(0,0,0,0.08);
+  --border2:  rgba(0,0,0,0.14);
+  --txt:      #0f172a;
+  --txt2:     #4b5a72;
+  --txt3:     #9aa3b2;
+  --accent:   #2563eb;
+  --green:    #16a34a;
+  --green-bg: rgba(22,163,74,0.08);
+  --green-bd: rgba(22,163,74,0.22);
+  --amber:    #b45309;
+  --amber-bg: rgba(180,83,9,0.08);
+  --amber-bd: rgba(180,83,9,0.22);
+  --red:      #dc2626;
+  --red-bg:   rgba(220,38,38,0.06);
+  --red-bd:   rgba(220,38,38,0.20);
+  --blue-dim: rgba(37,99,235,0.07);
+  --shadow:   0 4px 20px rgba(0,0,0,0.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.35;}
+[data-theme="light"] body::after{opacity:0.12;}
+.glow1{position:fixed;top:-15%;left:-5%;width:55%;height:55%;background:radial-gradient(ellipse,rgba(91,143,255,0.06) 0%,transparent 70%);pointer-events:none;animation:g1 18s ease-in-out infinite alternate;}
+.glow2{position:fixed;bottom:-15%;right:-5%;width:45%;height:45%;background:radial-gradient(ellipse,rgba(34,212,138,0.04) 0%,transparent 70%);pointer-events:none;animation:g2 22s ease-in-out infinite alternate;}
+@keyframes g1{to{transform:translate(4%,3%)}}
+@keyframes g2{to{transform:translate(-3%,-4%)}}
+
+/* HEADER */
+.header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:0 26px;height:60px;background:var(--card);border-bottom:3px solid var(--accent);position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,0.35);animation:fadeDown .6s ease both;transition:background .3s;}
+.logo{width:42px;height:42px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,#5b8fff 0%,#8b5cf6 100%);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#fff;letter-spacing:-0.5px;box-shadow:0 0 20px rgba(91,143,255,0.35);}
+.header-meta h1{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;letter-spacing:-.3px;}
+.header-meta p{font-size:10px;color:var(--txt2);margin-top:2px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite;display:inline-block;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.header-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.theme-btn{padding:6px 14px;border-radius:8px;font-size:11px;font-weight:500;background:var(--card);border:1px solid var(--border2);color:var(--txt2);cursor:pointer;font-family:'Instrument Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.theme-btn:hover{color:var(--txt);}
+.live-pill{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:100px;background:var(--green-bg);border:1px solid var(--green-bd);font-size:11px;font-weight:500;color:var(--green);}
+
+/* VERDICT SECTION */
+.verdict-bar{padding:14px 26px;background:linear-gradient(135deg,rgba(91,143,255,0.08) 0%,rgba(139,92,246,0.05) 100%);border-bottom:1px solid rgba(91,143,255,0.18);display:flex;align-items:flex-start;gap:16px;transition:background .3s;}
+[data-theme="light"] .verdict-bar{background:linear-gradient(135deg,rgba(37,99,235,0.06) 0%,rgba(139,92,246,0.03) 100%);border-bottom:1px solid rgba(37,99,235,0.14);}
+.verdict-icon{font-size:22px;flex-shrink:0;margin-top:1px;}
+.verdict-content{flex:1;}
+.verdict-eyebrow{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:5px;opacity:.85;}
+.verdict-headline{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;line-height:1.3;color:var(--txt);margin-bottom:5px;}
+.verdict-sub{font-size:12px;color:var(--txt2);line-height:1.55;}
+.verdict-badge{flex-shrink:0;padding:6px 14px;border-radius:8px;font-size:11px;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:.04em;text-transform:uppercase;align-self:flex-start;}
+.vbadge-critical{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd);}
+.vbadge-warn{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd);}
+.vbadge-good{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);}
+
+/* PRIORITY ACTIONS BAR */
+.priority-bar{padding:12px 26px;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px;transition:background .3s;}
+.priority-label{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.8px;color:var(--amber);opacity:.9;margin-bottom:4px;text-transform:uppercase;white-space:nowrap;}
+.priority-actions-row{display:flex;gap:8px;flex-wrap:wrap;flex:1;}
+.pa-card{display:flex;align-items:flex-start;gap:9px;background:rgba(128,128,128,0.04);border-radius:9px;padding:9px 12px;border:1px solid var(--border);flex:1;min-width:220px;transition:all .18s;cursor:default;}
+.pa-card:hover{background:rgba(128,128,128,0.08);border-color:var(--border2);}
+.pa-num{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;color:var(--accent);line-height:1;flex-shrink:0;width:18px;}
+.pa-body{}
+.pa-title{font-size:11.5px;font-weight:600;color:var(--txt);margin-bottom:2px;}
+.pa-desc{font-size:10.5px;color:var(--txt2);line-height:1.5;}
+.pa-badge{font-size:8.5px;font-family:'DM Mono',monospace;font-weight:700;padding:2px 8px;border-radius:4px;display:inline-block;margin-top:4px;text-transform:uppercase;letter-spacing:.04em;}
+.pab-now{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd);}
+.pab-week{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd);}
+.pab-month{background:var(--blue-dim);color:var(--accent);border:1px solid rgba(91,143,255,0.25);}
+
+/* PRODUCT FILTER BAR */
+.filter-bar{padding:10px 26px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap;transition:background .3s;position:sticky;top:60px;z-index:150;backdrop-filter:blur(10px);}
+.filter-bar-label{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--txt3);text-transform:uppercase;flex-shrink:0;margin-right:4px;}
+.prod-btn{padding:7px 16px;border-radius:8px;font-size:11.5px;font-weight:600;font-family:'Instrument Sans',sans-serif;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--txt2);transition:all .18s;display:flex;align-items:center;gap:6px;}
+.prod-btn:hover{color:var(--txt);border-color:var(--border2);background:rgba(128,128,128,0.06);}
+.prod-btn.active-all{background:var(--blue-dim);color:var(--accent);border-color:rgba(91,143,255,0.35);}
+.prod-btn.active-green{background:var(--green-bg);color:var(--green);border-color:var(--green-bd);}
+.prod-btn.active-blue{background:var(--blue-dim);color:var(--accent);border-color:rgba(91,143,255,0.35);}
+.prod-btn.active-amber{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-bd);}
+.prod-btn.active-red{background:var(--red-bg);color:var(--red);border-color:var(--red-bd);}
+.prod-dot{width:7px;height:7px;border-radius:50%;}
+
+/* VALUE INSIGHT */
+.value-insight-bar{margin:0 0 14px 0;padding:11px 16px;background:linear-gradient(135deg,rgba(245,166,35,0.08) 0%,rgba(91,143,255,0.06) 100%);border:1px solid rgba(245,166,35,0.18);border-radius:11px;display:flex;align-items:center;gap:10px;}
+.vi-icon{font-size:16px;flex-shrink:0;}
+.vi-lbl{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:2px;opacity:.85;}
+.vi-txt{font-size:12px;color:var(--txt2);line-height:1.5;}
+.vi-txt strong{color:var(--txt);}
+
+/* INSIGHTS BAR */
+.ins-bar{background:rgba(91,143,255,0.04);border-bottom:1px solid rgba(91,143,255,0.12);padding:9px 26px;display:flex;align-items:flex-start;gap:10px;transition:background .3s;}
+[data-theme="light"] .ins-bar{background:rgba(37,99,235,0.04);border-bottom:1px solid rgba(37,99,235,0.10);}
+.ins-lbl{font-size:9px;font-weight:700;letter-spacing:1.8px;color:var(--accent);opacity:.85;margin-bottom:3px;text-transform:uppercase;font-family:'DM Mono',monospace;}
+.ins-cards{display:flex;gap:9px;flex-wrap:wrap;}
+.ins-item{display:flex;gap:7px;background:var(--card);border-radius:7px;padding:6px 11px;border:1px solid rgba(91,143,255,0.14);min-width:190px;box-shadow:0 1px 4px rgba(0,0,0,0.15);}
+[data-theme="light"] .ins-item{box-shadow:0 1px 3px rgba(0,0,0,0.06);border-color:rgba(37,99,235,0.12);}
+.ins-dot{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+.ins-text{font-size:11px;line-height:1.5;color:var(--txt2);}
+.ins-sub{font-size:10px;color:var(--txt3);margin-top:1px;font-family:'DM Mono',monospace;}
+
+/* GROWTH STRIP */
+.growth-bar{background:var(--card);border-bottom:1px solid var(--border);padding:8px 26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;transition:background .3s;}
+.growth-lbl{font-size:9px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--txt3);font-family:'DM Mono',monospace;flex-shrink:0;}
+.growth-chips{display:flex;gap:7px;flex-wrap:wrap;}
+.gchip{display:flex;align-items:center;gap:6px;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:600;font-family:'Instrument Sans',sans-serif;cursor:default;border:1px solid;transition:transform .15s;}
+.gchip:hover{transform:translateY(-1px);}
+.gchip-green{background:var(--green-bg);border-color:var(--green-bd);color:var(--green);}
+.gchip-amber{background:var(--amber-bg);border-color:var(--amber-bd);color:var(--amber);}
+.gchip-red{background:var(--red-bg);border-color:var(--red-bd);color:var(--red);}
+.gchip-blue{background:var(--blue-dim);border-color:rgba(91,143,255,0.25);color:var(--accent);}
+.gdvdr{width:1px;height:20px;background:var(--border2);flex-shrink:0;}
+.growth-period{font-size:10px;color:var(--txt3);font-family:'DM Mono',monospace;margin-left:auto;}
+
+/* LAYOUT */
+.wrap{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:22px 26px;}
+.grid-2-1{display:grid;grid-template-columns:1.25fr 1fr;gap:14px;margin-bottom:14px;animation:fadeUp .6s .15s ease both;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;animation:fadeUp .6s .2s ease both;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:10px;animation:fadeUp .6s .1s ease both;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:15px 16px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;}
+.kpi::before{content:'';position:absolute;inset:0;border-radius:13px;background:var(--blue-dim);opacity:0;transition:opacity .2s;}
+.kpi:hover{transform:translateY(-2px);border-color:var(--border2);box-shadow:var(--shadow);}
+.kpi:hover::before{opacity:1;}
+.kpi-lbl{font-size:9.5px;color:var(--txt3);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;font-weight:500;}
+.kpi-val{font-family:'Syne',sans-serif;font-size:26px;font-weight:700;line-height:1;}
+.kpi-denom{font-size:12px;color:var(--txt2);font-weight:400;}
+.kpi-track{margin-top:9px;height:3px;background:rgba(128,128,128,0.12);border-radius:10px;overflow:hidden;}
+.kpi-fill{height:100%;border-radius:10px;transition:width 1.1s cubic-bezier(.4,0,.2,1);}
+.kpi-note{margin-top:7px;font-size:10px;font-family:'DM Mono',monospace;}
+
+/* PANEL */
+.panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;transition:background .3s,border-color .3s;}
+.panel-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.panel-title{font-family:'Syne',sans-serif;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:7px;}
+.pnum{font-family:'DM Mono',monospace;font-size:10px;color:var(--txt3);background:rgba(128,128,128,0.08);border:1px solid var(--border);padding:2px 7px;border-radius:5px;}
+
+/* SEC LABEL */
+.sec-label{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--txt3);text-transform:uppercase;letter-spacing:.1em;display:flex;align-items:center;gap:10px;margin:18px 0 12px;}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* TABLE */
+.search-wrap{position:relative;margin-bottom:10px;}
+.search-input{width:100%;background:rgba(128,128,128,0.06);border:1px solid var(--border);border-radius:7px;padding:7px 10px 7px 30px;font-size:11.5px;color:var(--txt);font-family:'Instrument Sans',sans-serif;outline:none;transition:border-color .2s;}
+.search-input::placeholder{color:var(--txt3);}
+.search-input:focus{border-color:var(--border2);}
+.search-icon{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--txt3);font-size:13px;pointer-events:none;}
+.filter-row{display:flex;gap:5px;margin-bottom:11px;flex-wrap:wrap;}
+.f-btn{font-size:9.5px;padding:3px 10px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--txt3);cursor:pointer;font-family:'DM Mono',monospace;transition:all .15s;font-weight:500;}
+.f-btn:hover{color:var(--txt2);}
+.f-btn.f-all{border-color:var(--border2);color:var(--txt2);}
+.f-btn.f-y{background:var(--green-bg);color:var(--green);border-color:var(--green-bd);}
+.f-btn.f-n{background:rgba(128,128,128,0.07);color:var(--txt2);border-color:var(--border2);}
+.dt{width:100%;border-collapse:collapse;font-size:11px;}
+.dt thead th{font-size:9px;color:var(--txt3);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.07em;padding:0 7px 8px;border-bottom:1px solid var(--border);font-weight:500;text-align:left;}
+.dt thead th.tc{text-align:center;}
+.dt tbody tr{border-bottom:1px solid rgba(128,128,128,0.06);transition:background .12s;cursor:pointer;}
+.dt tbody tr:hover{background:rgba(128,128,128,0.04);}
+.dt tbody tr:last-child{border-bottom:none;}
+.dt td{padding:7px;vertical-align:middle;}
+.pin{font-family:'DM Mono',monospace;font-size:10px;color:var(--txt2);}
+.aname{font-size:11px;font-weight:500;}
+
+/* CHIPS */
+.chip{display:inline-flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700;font-family:'DM Mono',monospace;border-radius:5px;padding:3px 8px;letter-spacing:.03em;transition:transform .15s;cursor:default;white-space:nowrap;}
+.chip:hover{transform:scale(1.08);}
+.cy{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);}
+.cn{background:rgba(128,128,128,0.07);color:var(--txt3);border:1px solid var(--border);}
+.sdots{display:flex;gap:3px;}
+.sd{width:7px;height:7px;border-radius:50%;transition:transform .15s;cursor:default;}
+.sd:hover{transform:scale(1.35);}
+
+/* HEATMAP */
+.hm-grid{display:grid;grid-template-columns:110px repeat(4,1fr);gap:3px;}
+.hm-hdr{font-size:8.5px;font-family:'DM Mono',monospace;color:var(--txt3);text-align:center;padding:3px 2px;text-transform:uppercase;letter-spacing:.06em;}
+.hm-lbl{font-size:8.5px;color:var(--txt2);text-align:right;padding:2px 7px 2px 0;display:flex;align-items:center;justify-content:flex-end;line-height:1.2;}
+.hm-cell{border-radius:5px;height:20px;display:flex;align-items:center;justify-content:center;font-size:7.5px;font-weight:700;font-family:'DM Mono',monospace;cursor:pointer;transition:transform .15s;}
+.hm-cell:hover{transform:scale(1.12);z-index:5;position:relative;}
+.hmy{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);}
+.hmn{background:rgba(128,128,128,0.07);color:var(--txt3);border:1px solid var(--border);}
+.hm-cell.hm-highlight-miss{background:rgba(255,92,92,0.15);color:var(--red);border:1px solid rgba(255,92,92,0.3);}
+.hm-cell.hm-highlight-listed{background:rgba(34,212,138,0.18);color:var(--green);border:1px solid rgba(34,212,138,0.35);}
+.hm-cell.hm-dim{opacity:0.25;}
+
+/* RANK BARS */
+.rank-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.rank-row:last-child{margin-bottom:0;}
+.rank-lbl{font-size:10px;color:var(--txt2);width:95px;flex-shrink:0;text-align:right;font-family:'DM Mono',monospace;line-height:1.3;}
+.rank-track{flex:1;height:9px;background:rgba(128,128,128,0.08);border-radius:10px;overflow:hidden;}
+.rank-fill{height:100%;border-radius:10px;transition:width 1.3s cubic-bezier(.4,0,.2,1);}
+.rank-val{font-family:'DM Mono',monospace;font-size:11.5px;font-weight:500;min-width:30px;text-align:right;}
+
+/* ALERT */
+.alert-item{display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:9px;margin-bottom:7px;background:rgba(128,128,128,0.03);border:1px solid var(--border);cursor:pointer;transition:all .18s;}
+.alert-item:hover{background:rgba(128,128,128,0.07);border-color:var(--border2);}
+.alert-item:last-child{margin-bottom:0;}
+.a-sku{font-size:11px;font-weight:600;color:var(--amber);width:100px;flex-shrink:0;}
+.a-loc{font-size:11px;color:var(--txt2);flex:1;}
+.a-tag{font-size:9px;font-family:'DM Mono',monospace;font-weight:700;padding:2px 7px;border-radius:5px;flex-shrink:0;text-transform:uppercase;letter-spacing:.04em;}
+
+/* IMPACT */
+.impact-item{padding:11px 13px;border-radius:10px;margin-bottom:10px;}
+.impact-item:last-child{margin-bottom:0;}
+.impact-lbl{font-size:9px;font-weight:700;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;}
+.impact-txt{font-size:11px;color:var(--txt2);line-height:1.55;}
+.impact-action{font-size:10.5px;margin-top:5px;font-weight:600;}
+.impact-action::before{content:'→ ';}
+
+/* PRIORITY ACTION PANEL */
+.paction{display:flex;align-items:flex-start;gap:11px;padding:11px 13px;border-radius:10px;margin-bottom:9px;border:1px solid var(--border);background:rgba(128,128,128,0.03);transition:all .18s;cursor:default;}
+.paction:hover{background:rgba(128,128,128,0.06);border-color:var(--border2);}
+.paction:last-child{margin-bottom:0;}
+.paction-num{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--accent);line-height:1;flex-shrink:0;width:22px;}
+.paction-title{font-size:12px;font-weight:600;color:var(--txt);margin-bottom:3px;}
+.paction-desc{font-size:11px;color:var(--txt2);line-height:1.5;}
+.paction-badge{font-size:9px;font-family:'DM Mono',monospace;font-weight:700;padding:2px 9px;border-radius:5px;flex-shrink:0;margin-top:1px;}
+.badge-now{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd);}
+.badge-week{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd);}
+.badge-month{background:var(--blue-dim);color:var(--accent);border:1px solid rgba(91,143,255,0.25);}
+.badge-ongoing{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);}
+
+/* PLAT BARS */
+.plat-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(128,128,128,0.06);}
+.plat-row:last-child{border-bottom:none;}
+.plat-name{font-size:11.5px;font-weight:500;width:90px;flex-shrink:0;}
+.plat-track{flex:1;height:9px;background:rgba(128,128,128,0.08);border-radius:10px;overflow:hidden;position:relative;}
+.plat-segs{position:absolute;inset:0;display:flex;border-radius:10px;overflow:hidden;}
+.seg{height:100%;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
+.sg{background:var(--green);}
+.plat-stat{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--txt2);min-width:64px;text-align:right;}
+
+/* INSIGHT BLOCK */
+.insight{margin-top:12px;padding:12px 14px;background:linear-gradient(135deg,rgba(91,143,255,0.07) 0%,rgba(139,92,246,0.04) 100%);border:1px solid rgba(91,143,255,0.16);border-radius:10px;}
+.insight-lbl{font-size:9px;font-family:'DM Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.09em;font-weight:600;margin-bottom:5px;}
+.insight-txt{font-size:11.5px;color:var(--txt2);line-height:1.55;}
+
+/* MINI STATS */
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.mini{background:rgba(128,128,128,0.05);border:1px solid var(--border);border-radius:9px;padding:10px 12px;}
+.mini-v{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;}
+.mini-l{font-size:9.5px;color:var(--txt3);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;margin-top:3px;}
+
+/* LEGEND */
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;}
+.lg-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--txt3);font-family:'DM Mono',monospace;}
+.lg-dot{width:8px;height:8px;border-radius:3px;}
+
+.chart-wrap{position:relative;}
+
+/* TOOLTIP */
+.tt{position:fixed;background:var(--card2);border:1px solid var(--border2);border-radius:9px;padding:9px 13px;font-size:11.5px;pointer-events:none;z-index:1000;opacity:0;transition:opacity .12s;max-width:220px;box-shadow:var(--shadow);color:var(--txt2);line-height:1.45;}
+.tt.show{opacity:1;}
+
+/* ANIMATIONS */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(128,128,128,0.15);border-radius:10px;}
+.hide{display:none!important;}
+</style>
+</head>
+<body>
+<div class="glow1"></div>
+<div class="glow2"></div>
+<div class="tt" id="tt"></div>
+
+<!-- HEADER -->
+<div class="header">
+  <div style="display:flex;align-items:center;gap:14px">
+    <div class="logo">B·O</div>
+    <div class="header-meta">
+      <h1>Bran-O · JioMart Distribution Intelligence</h1>
+      <p><span class="pulse-dot"></span>Lucknow &nbsp;·&nbsp; 20 Pin Codes &nbsp;·&nbsp; 4 SKUs &nbsp;·&nbsp; May 2026</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="live-pill"><span class="pulse-dot"></span>Live</div>
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">☀ Light Mode</button>
+  </div>
+</div>
+
+<!-- VERDICT SECTION -->
+<div class="verdict-bar" id="verdict-bar">
+  <div class="verdict-icon" id="verdict-icon">🔴</div>
+  <div class="verdict-content">
+    <div class="verdict-eyebrow">Distribution Verdict · May 2026</div>
+    <div class="verdict-headline" id="verdict-headline">Bran-O holds partial ground in Lucknow — Cream Roll is dominant, but Pizza Breads are missing from 75% of the market while Good Morning fills the gap.</div>
+    <div class="verdict-sub" id="verdict-sub">66% average coverage across 20 areas. The highest-rated SKU (Pizza Breads, 3.7★) has the worst reach. This is not a demand problem — it's a listing problem with an active competitor filling the shelf space.</div>
+  </div>
+  <div class="verdict-badge vbadge-critical" id="verdict-badge">Action Required</div>
+</div>
+
+<!-- PRIORITY ACTIONS -->
+<div class="priority-bar">
+  <div style="flex-shrink:0;padding-top:2px;">
+    <div class="priority-label">Priority Actions</div>
+    <div style="font-size:9px;color:var(--txt3);font-family:'DM Mono',monospace;margin-top:1px;">May 2026</div>
+  </div>
+  <div class="priority-actions-row" id="priority-actions-row">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<!-- PRODUCT FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-bar-label">View by SKU</div>
+  <button class="prod-btn active-all" id="btn-all" onclick="setProduct('all')">
+    <div class="prod-dot" style="background:var(--accent)"></div> All Products
+  </button>
+  <button class="prod-btn" id="btn-cream" onclick="setProduct('cream')">
+    <div class="prod-dot" style="background:var(--green)"></div> Cream Roll
+  </button>
+  <button class="prod-btn" id="btn-milk" onclick="setProduct('milk')">
+    <div class="prod-dot" style="background:var(--accent)"></div> Milk Bread
+  </button>
+  <button class="prod-btn" id="btn-pav" onclick="setProduct('pav')">
+    <div class="prod-dot" style="background:var(--amber)"></div> Bombay Pav
+  </button>
+  <button class="prod-btn" id="btn-pizza" onclick="setProduct('pizza')">
+    <div class="prod-dot" style="background:var(--red)"></div> Pizza Breads
+  </button>
+</div>
+
+<!-- INSIGHTS BAR -->
+<div class="ins-bar">
+  <div style="font-size:15px;margin-top:2px;">💡</div>
+  <div style="flex:1;">
+    <div class="ins-lbl" id="ins-lbl">Insights · JioMart Distribution Intelligence</div>
+    <div class="ins-cards" id="ins-cards"></div>
+  </div>
+</div>
+
+<!-- GROWTH STRIP -->
+<div class="growth-bar">
+  <div class="growth-lbl">Coverage Snapshot</div>
+  <div class="growth-chips" id="growth-chips"></div>
+  <div class="gdvdr"></div>
+  <div class="growth-period" id="growth-period">May 2026 · Lucknow · JioMart</div>
+</div>
+
+<div class="wrap">
+
+<!-- KPI -->
+<div class="kpi-grid" id="kpi-grid"></div>
+
+<!-- VALUE INSIGHT -->
+<div class="value-insight-bar" id="value-insight-bar">
+  <div class="vi-icon">⚡</div>
+  <div>
+    <div class="vi-lbl">Opportunity Cost</div>
+    <div class="vi-txt" id="vi-txt"><strong>15 unlisted Pizza Bread zones × avg 2–3 daily orders = 30–45 lost transactions per day.</strong> At ₹35 avg ticket, that's ₹38,000–57,000 in monthly revenue leaking to Good Morning — from a single SKU alone.</div>
+  </div>
+</div>
+
+<!-- SEC 1: COVERAGE OVERVIEW -->
+<div class="sec-label" id="sec-coverage">Coverage Overview</div>
+<div class="grid-2-1">
+
+  <!-- TABLE -->
+  <div class="panel">
+    <div class="panel-hd">
+      <div class="panel-title"><span class="pnum">01</span> <span id="table-title">Area × Product Coverage</span></div>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input class="search-input" id="area-search" placeholder="Search area or pin code..." oninput="renderTable()">
+    </div>
+    <div class="filter-row">
+      <button class="f-btn f-all" onclick="setFilter('all',this)">All</button>
+      <button class="f-btn f-y"   onclick="setFilter('full',this)">✓ Full Coverage</button>
+      <button class="f-btn f-n"   onclick="setFilter('gap',this)">✗ Has Gaps</button>
+    </div>
+    <table class="dt">
+      <thead id="table-head">
+        <tr>
+          <th>PIN</th>
+          <th>Area</th>
+          <th class="tc">Milk Bread</th>
+          <th class="tc">Bombay Pav</th>
+          <th class="tc">Cream Roll</th>
+          <th class="tc">Pizza Bread</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody id="main-tbody"></tbody>
+    </table>
+    <div class="legend">
+      <div class="lg-item"><div class="lg-dot" style="background:var(--green)"></div>Listed</div>
+      <div class="lg-item"><div class="lg-dot" style="background:rgba(128,128,128,0.2)"></div>Not Listed</div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <!-- SKU REACH -->
+    <div class="panel">
+      <div class="panel-hd">
+        <div class="panel-title"><span class="pnum">02</span> <span id="sku-reach-title">SKU Reach on JioMart</span></div>
+      </div>
+      <div id="sku-reach-rows"></div>
+      <div class="insight" id="sku-reach-insight">
+        <div class="insight-lbl">⬡ Insight</div>
+        <div class="insight-txt" id="sku-reach-insight-txt">Pizza Breads (3.7★ — highest rated SKU) has worst reach at 25%. Good Morning's Pizza Bread is listed in 13 of those 15 missing areas.</div>
+      </div>
+    </div>
+    <!-- MINI STATS -->
+    <div class="panel" style="padding:14px 16px">
+      <div class="panel-title" style="margin-bottom:10px"><span class="pnum">03</span> Summary</div>
+      <div class="mini-grid" id="mini-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEC 2: ANALYTICS -->
+<div class="sec-label">Analytics</div>
+<div class="grid-3">
+
+  <!-- HEATMAP -->
+  <div class="panel">
+    <div class="panel-hd">
+      <div class="panel-title"><span class="pnum">04</span> Availability Heatmap</div>
+      <span style="font-size:9.5px;color:var(--txt3);font-family:'DM Mono',monospace">hover cells</span>
+    </div>
+    <div class="hm-grid" id="hm-grid">
+      <div class="hm-hdr"></div>
+      <div class="hm-hdr">Milk Br.</div>
+      <div class="hm-hdr">Bom.Pav</div>
+      <div class="hm-hdr">Cream R.</div>
+      <div class="hm-hdr">Pizza Br.</div>
+    </div>
+    <div class="legend" style="margin-top:8px">
+      <div class="lg-item"><div class="lg-dot" style="background:var(--green)"></div>Listed</div>
+      <div class="lg-item"><div class="lg-dot" style="background:rgba(128,128,128,0.2)"></div>Not Listed</div>
+    </div>
+  </div>
+
+  <!-- SKU COVERAGE CHART -->
+  <div class="panel">
+    <div class="panel-hd">
+      <div class="panel-title"><span class="pnum">05</span> SKU Coverage vs Competitor</div>
+    </div>
+    <div class="chart-wrap" style="height:210px"><canvas id="c1"></canvas></div>
+    <div class="legend" style="margin-top:8px">
+      <div class="lg-item"><div class="lg-dot" style="background:var(--green)"></div>Bran-O Listed</div>
+      <div class="lg-item"><div class="lg-dot" style="background:rgba(128,128,128,0.2)"></div>Not Listed</div>
+    </div>
+  </div>
+
+  <!-- GAP SEVERITY -->
+  <div class="panel">
+    <div class="panel-hd">
+      <div class="panel-title"><span class="pnum">06</span> Listing Quality Flags</div>
+    </div>
+    <div style="font-size:11px;color:var(--txt3);margin-bottom:13px;line-height:1.5">Areas with missing SKUs — ranked by gap severity</div>
+    <div id="gap-rank-list"></div>
+    <div class="insight">
+      <div class="insight-lbl">⬡ Priority Action</div>
+      <div class="insight-txt" id="gap-insight-txt">8 critical zones have 2 missing SKUs. Fixing these 8 areas raises overall coverage from 66% to ~85%.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PUSH PRIORITY (full width) -->
+<div class="panel" style="margin-bottom:14px">
+  <div class="panel-hd">
+    <div class="panel-title"><span class="pnum">07</span> Area Push Priority (Coverage Score 0–4)</div>
+    <div style="display:flex;gap:10px">
+      <div class="lg-item"><div class="lg-dot" style="background:var(--red)"></div>Critical (≤2)</div>
+      <div class="lg-item"><div class="lg-dot" style="background:var(--amber)"></div>Needs Push (3)</div>
+      <div class="lg-item"><div class="lg-dot" style="background:var(--green)"></div>Full Coverage (4)</div>
+    </div>
+  </div>
+  <div style="height:230px"><canvas id="c2"></canvas></div>
+</div>
+
+<!-- SEC 3: GAP ANALYSIS -->
+<div class="sec-label">Gap Analysis & Competitive Threat</div>
+<div class="grid-2-1">
+
+  <!-- GAP TRACKER -->
+  <div class="panel">
+    <div class="panel-hd">
+      <div class="panel-title"><span class="pnum">08</span> SKU Gap Tracker</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9.5px;color:var(--red);background:var(--red-bg);padding:2px 9px;border-radius:5px;border:1px solid var(--red-bd)">19 areas affected</div>
+    </div>
+    <div id="gap-tracker"></div>
+    <div class="impact-item" style="background:var(--red-bg);border:1px solid var(--red-bd);border-left:3px solid var(--red);margin-top:12px;">
+      <div class="impact-lbl" style="color:var(--red)">⚡ Critical Alert</div>
+      <div class="impact-txt">Pizza Breads — highest rated SKU (3.7★) — is absent from 75% of Lucknow's JioMart. Good Morning has filled this gap in 13 areas. This is active revenue loss happening right now.</div>
+    </div>
+  </div>
+
+  <!-- RIGHT: COMPETITOR + CHART -->
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div class="panel">
+      <div class="panel-hd"><div class="panel-title"><span class="pnum">09</span> Competitor Presence (Pizza Bread)</div></div>
+      <div style="height:200px"><canvas id="c3"></canvas></div>
+      <div class="legend" style="margin-top:8px">
+        <div class="lg-item"><div class="lg-dot" style="background:var(--red)"></div>Good Morning listed, Bran-O absent</div>
+        <div class="lg-item"><div class="lg-dot" style="background:var(--green)"></div>Bran-O listed</div>
+        <div class="lg-item"><div class="lg-dot" style="background:var(--txt3)"></div>Neither listed</div>
+      </div>
+    </div>
+    <div class="panel" style="padding:14px 16px">
+      <div class="panel-title" style="margin-bottom:10px"><span class="pnum">10</span> Competitive Risk</div>
+      <div class="mini-grid">
+        <div class="mini"><div class="mini-v" style="color:var(--red)">13</div><div class="mini-l">Competitor zones</div></div>
+        <div class="mini"><div class="mini-v" style="color:var(--amber)">3.7★</div><div class="mini-l">Pizza Bread rating</div></div>
+        <div class="mini"><div class="mini-v" style="color:var(--green)">100%</div><div class="mini-l">Cream Roll coverage</div></div>
+        <div class="mini"><div class="mini-v" style="color:var(--accent)">1</div><div class="mini-l">Full portfolio area</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEC 4: BUSINESS IMPACT -->
+<div class="sec-label">Business Impact & Strategic Decisions</div>
+<div class="grid-3">
+
+  <!-- IMPACT CARDS -->
+  <div class="panel">
+    <div class="panel-hd"><div class="panel-title"><span class="pnum">11</span> Revenue Impact</div></div>
+    <div class="impact-item" style="background:var(--red-bg);border:1px solid var(--red-bd);">
+      <div class="impact-lbl" style="color:var(--red)">🚨 Critical Loss</div>
+      <div class="impact-txt">Pizza Breads missing in 15/20 areas. Highest-rated SKU (3.7★) = highest demand signal. Every unlisted area is a sale going to Good Morning or lost entirely.</div>
+      <div class="impact-action" style="color:var(--red)">List Pizza Breads in all 15 missing pincodes this week. Good Morning is already there.</div>
+    </div>
+    <div class="impact-item" style="background:var(--amber-bg);border:1px solid var(--amber-bd);margin-top:10px;">
+      <div class="impact-lbl" style="color:var(--amber)">⚠ Portfolio Gap</div>
+      <div class="impact-txt">Bombay Pav absent in 7 areas including Hazratganj & IIM Road — Lucknow's most commercially dense zones.</div>
+      <div class="impact-action" style="color:var(--amber)">Bundle Bombay Pav listing request with Pizza Breads in JioMart outreach.</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-hd"><div class="panel-title"><span class="pnum">12</span> Competitor Intelligence</div></div>
+    <div class="impact-item" style="background:var(--red-bg);border:1px solid var(--red-bd);">
+      <div class="impact-lbl" style="color:var(--red)">🏴 Market Share Leak</div>
+      <div class="impact-txt">Good Morning is capturing Bran-O's highest-value zones — Gomti Nagar, Indira Nagar, Hazratganj — by default. They don't need to outsell Bran-O, just show up first.</div>
+      <div class="impact-action" style="color:var(--red)">Listing = presence. Urgency: this week, not next month.</div>
+    </div>
+    <div class="impact-item" style="background:var(--green-bg);border:1px solid var(--green-bd);margin-top:10px;">
+      <div class="impact-lbl" style="color:var(--green)">💡 Leverage Asset</div>
+      <div class="impact-txt">Cream Roll's 100% coverage proves seller relationship is working. Use this track record as leverage with JioMart to fast-track Pizza Bread listings.</div>
+      <div class="impact-action" style="color:var(--green)">Open JioMart listing talks with Cream Roll's perfect score as credibility proof.</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-hd"><div class="panel-title"><span class="pnum">13</span> Growth Opportunity</div></div>
+    <div class="impact-item" style="background:var(--green-bg);border:1px solid var(--green-bd);">
+      <div class="impact-lbl" style="color:var(--green)">🏆 Gold Standard</div>
+      <div class="impact-txt">BBD University/Uttardhona is Lucknow's only 100% coverage area — all 4 SKUs listed. This proves full portfolio coverage is operationally possible. The blueprint exists.</div>
+      <div class="impact-action" style="color:var(--green)">Audit what worked at BBD University. Document it. Replicate to all 8 critical zones first.</div>
+    </div>
+    <div class="impact-item" style="background:rgba(91,143,255,0.07);border:1px solid rgba(91,143,255,0.16);margin-top:10px;">
+      <div class="impact-lbl" style="color:var(--accent)">📊 Coverage Math</div>
+      <div class="impact-txt">Fixing just the 8 "Critical Zones" (2+ missing SKUs) raises the overall coverage score from 66% to ~85%. That's near-full coverage with targeted effort in 8 areas only.</div>
+      <div class="impact-action" style="color:var(--accent)">Run a 14-day "Critical 8" sprint before next audit cycle.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SEC 5: PRIORITY ACTIONS DETAILED -->
+<div class="sec-label">Action Plan</div>
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-hd"><div class="panel-title"><span class="pnum">14</span> Immediate Actions</div></div>
+    <div class="paction">
+      <div class="paction-num">01</div>
+      <div style="flex:1">
+        <div class="paction-title">List Pizza Breads in All 15 Missing Areas</div>
+        <div class="paction-desc">Highest-rated SKU (3.7★) is absent from 75% of JioMart Lucknow. Good Morning is present in 13 of those areas. Raise JioMart listing tickets today — every day of delay is competitor shelf time compounding.</div>
+      </div>
+      <div class="paction-badge badge-now">ACT NOW</div>
+    </div>
+    <div class="paction">
+      <div class="paction-num">02</div>
+      <div style="flex:1">
+        <div class="paction-title">Fix the "Critical 8" Dead Zones — 14-Day Sprint</div>
+        <div class="paction-desc">Hazratganj, Gomti Nagar, Aishbagh, Dubagga, Khand 2, Munshipulia, IIM Road, Nirala Nagar each have 2 products missing. Assign each to a distributor with a clear SLA. This single action raises coverage to ~85%.</div>
+      </div>
+      <div class="paction-badge badge-week">THIS WEEK</div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-hd"><div class="panel-title"><span class="pnum">15</span> Strategic Actions</div></div>
+    <div class="paction">
+      <div class="paction-num">03</div>
+      <div style="flex:1">
+        <div class="paction-title">Replicate the BBD University Blueprint</div>
+        <div class="paction-desc">BBD University is Bran-O's only 100% coverage zone. Audit the distributor, JioMart account, and onboarding process that got all 4 SKUs listed there. Document it as an SOP and apply systematically to remaining 19 areas.</div>
+      </div>
+      <div class="paction-badge badge-month">THIS MONTH</div>
+    </div>
+    <div class="paction">
+      <div class="paction-num">04</div>
+      <div style="flex:1">
+        <div class="paction-title">Set Monthly JioMart Coverage Audit as Standard KPI</div>
+        <div class="paction-desc">Products can get de-listed, stock-outs go undetected, competitors add new areas monthly. Track coverage score in leadership reviews. Target: 66% today → 90%+ in 90 days if Critical 8 sprint succeeds.</div>
+      </div>
+      <div class="paction-badge badge-ongoing">ONGOING</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ─── DATA ───
+const areas = [
+  {pin:'226031',name:'Jankipuram Extension',     milk:'Y',pav:'Y',cream:'Y',pizza:'N'},
+  {pin:'226001',name:'Hazratganj / GPO',          milk:'Y',pav:'N',cream:'Y',pizza:'N'},
+  {pin:'226010',name:'Gomti Nagar',               milk:'N',pav:'Y',cream:'Y',pizza:'N'},
+  {pin:'226016',name:'Indira Nagar',              milk:'Y',pav:'Y',cream:'Y',pizza:'N'},
+  {pin:'226018',name:'Aminabad',                  milk:'Y',pav:'Y',cream:'Y',pizza:'N'},
+  {pin:'226005',name:'Alambagh',                  milk:'Y',pav:'Y',cream:'Y',pizza:'N'},
+  {pin:'226011',name:'Talkatora',                 milk:'Y',pav:'Y',cream:'Y',pizza:'N'},
+  {pin:'226002',name:'Arjunganj',                 milk:'Y',pav:'Y',cream:'Y',pizza:'N'},
+  {pin:'226004',name:'Aishbagh',                  milk:'N',pav:'N',cream:'Y',pizza:'Y'},
+  {pin:'226021',name:'Kursi Road Gurumba Thana',  milk:'Y',pav:'Y',cream:'Y',pizza:'N'},
+  {pin:'226022',name:'Adil Nagar, Kursi Road',    milk:'Y',pav:'Y',cream:'Y',pizza:'N'},
+  {pin:'226024',name:'Aliganj Sector-A',          milk:'Y',pav:'Y',cream:'Y',pizza:'N'},
+  {pin:'226003',name:'Dubagga',                   milk:'N',pav:'N',cream:'Y',pizza:'Y'},
+  {pin:'226017',name:'Rajajipuram',               milk:'Y',pav:'Y',cream:'Y',pizza:'N'},
+  {pin:'226012',name:'Jail Road Bangla Bazar',    milk:'Y',pav:'Y',cream:'Y',pizza:'N'},
+  {pin:'226028',name:'Khand 2 / Kamta',           milk:'N',pav:'N',cream:'Y',pizza:'Y'},
+  {pin:'226016',name:'Munshipulia',               milk:'N',pav:'N',cream:'Y',pizza:'Y'},
+  {pin:'226028',name:'BBD University/Uttardhona', milk:'Y',pav:'Y',cream:'Y',pizza:'Y'},
+  {pin:'226013',name:'IIM Road Mubarakpur',       milk:'Y',pav:'N',cream:'Y',pizza:'N'},
+  {pin:'226020',name:'Nirala Nagar/Daliganj',     milk:'Y',pav:'N',cream:'Y',pizza:'N'},
+];
+
+const skuLabels = {milk:'Milk Bread',pav:'Bombay Pav',cream:'Cream Roll',pizza:'Pizza Breads'};
+const skuKeys   = ['milk','pav','cream','pizza'];
+const skuRatings= {milk:'3.6★',pav:'3.6★',cream:'3.5★',pizza:'3.7★'};
+const compAreas = ['Jankipuram Extension','Hazratganj / GPO','Gomti Nagar','Indira Nagar','Aminabad','Alambagh','Talkatora','Arjunganj','Kursi Road Gurumba Thana','Adil Nagar, Kursi Road','Aliganj Sector-A','Rajajipuram','Jail Road Bangla Bazar'];
+
+let darkMode  = true;
+let filterVal = 'all';
+let charts    = [];
+let activeProd = 'all';
+
+// ─── PER-PRODUCT CONFIG ───
+const prodConfig = {
+  all: {
+    verdictIcon: '🔴',
+    verdictHeadline: 'Bran-O holds partial ground in Lucknow — Cream Roll is dominant, but Pizza Breads are missing from 75% of the market while Good Morning fills the gap.',
+    verdictSub: '66% average coverage across 20 areas. The highest-rated SKU (Pizza Breads, 3.7★) has the worst reach. This is not a demand problem — it is a listing problem with an active competitor filling the shelf space.',
+    verdictBadge: 'Action Required',
+    verdictBadgeClass: 'vbadge-critical',
+    insLabel: 'Insights · JioMart Distribution Intelligence',
+    insights: [
+      {dot:'var(--red)',   text:'Pizza Breads (3.7★) missing in 15/20 areas — Good Morning present in 13 of those zones', sub:'→ Urgent listing push required this week'},
+      {dot:'var(--amber)', text:'8 Critical Zones have 2+ missing SKUs — Hazratganj, Gomti Nagar, IIM Road are high-footfall areas', sub:'→ 14-day sprint fixes these 8 areas and lifts coverage to 85%'},
+      {dot:'var(--green)', text:'BBD University is Bran-O\'s only 100% coverage area — all 4 SKUs listed, zero gaps', sub:'→ Replicate this model across all 20 areas systematically'},
+    ],
+    chips: [
+      {cls:'gchip-green', text:'✅ Cream Roll 100% coverage — perfect reach'},
+      {cls:'gchip-red',   text:'🔴 Pizza Breads 25% — highest rated, worst coverage'},
+      {cls:'gchip-amber', text:'⚠ Only 1/20 areas has full portfolio'},
+      {cls:'gchip-red',   text:'🔴 13 areas captured by Good Morning'},
+    ],
+    kpis: [
+      {lbl:'Overall Coverage Score', val:'66', denom:'%', fill:66, grad:'#f5a623,#5b8fff', note:'Needs urgent improvement', nc:'var(--amber)'},
+      {lbl:'Cream Roll',  val:'20', denom:'/20', fill:100, grad:'#22d48a,#5b8fff', note:'✓ 100% — gold standard', nc:'var(--green)'},
+      {lbl:'Milk Bread',  val:'15', denom:'/20', fill:75,  grad:'#5b8fff,#22d48a', note:'5 areas missing',         nc:'var(--txt2)'},
+      {lbl:'Bombay Pav',  val:'13', denom:'/20', fill:65,  grad:'#f5a623,#5b8fff', note:'7 areas missing',         nc:'var(--amber)'},
+      {lbl:'Pizza Breads',val:'5',  denom:'/20', fill:25,  grad:'#ff5c5c,#f5a623', note:'⚠ 15 areas missing',      nc:'var(--red)'},
+    ],
+    viTxt: '<strong>15 unlisted Pizza Bread zones × avg 2–3 daily orders = 30–45 lost transactions per day.</strong> At ₹35 avg ticket, that\'s ₹38,000–57,000 in monthly revenue leaking to Good Morning — from a single SKU alone.',
+    skuReachTitle: 'SKU Reach on JioMart',
+    skuReachInsight: 'Pizza Breads (3.7★ — highest rated SKU) has worst reach at 25%. Good Morning\'s Pizza Bread is listed in 13 of those 15 missing areas.',
+    miniStats: [
+      {v:'66%',c:'var(--amber)',l:'Avg Coverage Score'},
+      {v:'19/20',c:'var(--red)',l:'Areas with gaps'},
+      {v:'1',c:'var(--green)',l:'Full coverage area'},
+      {v:'13',c:'var(--red)',l:'Competitor zones'},
+    ],
+    gapInsight: '8 critical zones have 2 missing SKUs. Fixing these 8 areas raises overall coverage from 66% to ~85%.',
+    priorityActions: [
+      {num:'01',title:'List Pizza Breads in All 15 Missing Areas',desc:'Highest-rated SKU (3.7★) absent from 75% of JioMart Lucknow. Good Morning fills 13 of those areas. Raise listing tickets now.',badge:'pab-now',badgeTxt:'ACT NOW'},
+      {num:'02',title:'Run the "Critical 8" 14-Day Coverage Sprint',desc:'Hazratganj, Gomti Nagar, IIM Road — 8 zones with 2 gaps each. Fixing them alone lifts coverage to ~85%.',badge:'pab-week',badgeTxt:'THIS WEEK'},
+      {num:'03',title:'Replicate the BBD University Blueprint',desc:'Only 100% coverage area. Document the process and apply it as an SOP across all 19 remaining areas.',badge:'pab-month',badgeTxt:'THIS MONTH'},
+    ],
+  },
+  cream: {
+    verdictIcon: '✅',
+    verdictHeadline: 'Cream Roll is Bran-O\'s strongest asset — 100% coverage across all 20 Lucknow areas with zero gaps.',
+    verdictSub: 'The only SKU with full market presence. All 20 pincodes are listed, and no competitor displacement has been detected. This is the benchmark every other SKU must match.',
+    verdictBadge: 'Performing',
+    verdictBadgeClass: 'vbadge-good',
+    insLabel: 'Cream Roll · Coverage Insights',
+    insights: [
+      {dot:'var(--green)', text:'Cream Roll listed in all 20/20 areas — only SKU with complete Lucknow coverage', sub:'→ Use this as JioMart negotiation leverage for other SKUs'},
+      {dot:'var(--green)', text:'Zero competitor displacement detected for Cream Roll across all zones', sub:'→ Strong market hold, no defensive action needed'},
+      {dot:'var(--accent)', text:'Cream Roll\'s 3.5★ rating is the lowest among SKUs — room to improve shelf positioning', sub:'→ Consider bundling or visibility push in top-tier areas'},
+    ],
+    chips: [
+      {cls:'gchip-green', text:'✅ 20/20 areas — perfect reach'},
+      {cls:'gchip-green', text:'✅ No competitor displacement'},
+      {cls:'gchip-blue',  text:'📊 3.5★ rating — lowest among SKUs'},
+    ],
+    kpis: [
+      {lbl:'Cream Roll Coverage', val:'20', denom:'/20', fill:100, grad:'#22d48a,#5b8fff', note:'✓ 100% — gold standard', nc:'var(--green)'},
+      {lbl:'Areas Listed',   val:'20', denom:' zones', fill:100, grad:'#22d48a,#5b8fff', note:'Full city presence',     nc:'var(--green)'},
+      {lbl:'Areas Missing',  val:'0',  denom:' zones', fill:0,   grad:'#22d48a,#5b8fff', note:'Zero gaps',             nc:'var(--green)'},
+      {lbl:'Customer Rating', val:'3.5', denom:'★',   fill:70,  grad:'#f5a623,#5b8fff', note:'Lowest among 4 SKUs',   nc:'var(--amber)'},
+      {lbl:'Competitor Zones', val:'0', denom:' zones', fill:0,  grad:'#22d48a,#5b8fff', note:'No threat',             nc:'var(--green)'},
+    ],
+    viTxt: '<strong>Cream Roll\'s 100% coverage is the strongest negotiation card Bran-O holds.</strong> Use this proven track record to fast-track JioMart listings for Pizza Breads and Bombay Pav — the data proves Bran-O products sell in Lucknow.',
+    skuReachTitle: 'Cream Roll — Area by Area',
+    skuReachInsight: 'Cream Roll is the only SKU listed in all 20 areas. This makes it the strongest proof-of-concept for Bran-O\'s JioMart presence in Lucknow.',
+    miniStats: [
+      {v:'100%',c:'var(--green)',l:'Coverage Score'},
+      {v:'0',   c:'var(--green)',l:'Areas with gaps'},
+      {v:'20',  c:'var(--green)',l:'Active listings'},
+      {v:'3.5★',c:'var(--amber)',l:'Avg rating'},
+    ],
+    gapInsight: 'Cream Roll has zero gaps. It is the benchmark for all other SKUs. Replicate this performance for Pizza Breads next.',
+    priorityActions: [
+      {num:'01',title:'Leverage Cream Roll\'s 100% Score in JioMart Talks',desc:'Use Cream Roll\'s perfect presence record as proof of Bran-O\'s reliability. Present it when requesting Pizza Bread listings.',badge:'pab-now',badgeTxt:'ACT NOW'},
+      {num:'02',title:'Push Visibility in Top-Tier Areas',desc:'Cream Roll has presence but 3.5★ is the lowest rating. Request better shelf placement in Gomti Nagar, Indira Nagar, Hazratganj.',badge:'pab-week',badgeTxt:'THIS WEEK'},
+      {num:'03',title:'Document the Cream Roll Onboarding SOP',desc:'Whatever process got Cream Roll to 100% — write it down. Apply it systematically to the 3 underperforming SKUs.',badge:'pab-month',badgeTxt:'THIS MONTH'},
+    ],
+  },
+  milk: {
+    verdictIcon: '🟡',
+    verdictHeadline: 'Milk Bread covers 75% of Lucknow — solid presence, but 5 high-density zones remain unlisted.',
+    verdictSub: '15 of 20 areas have Milk Bread listed. The 5 missing zones — Gomti Nagar, Aishbagh, Dubagga, Khand 2, Munshipulia — include commercially active areas that represent untapped daily demand.',
+    verdictBadge: 'Needs Push',
+    verdictBadgeClass: 'vbadge-warn',
+    insLabel: 'Milk Bread · Coverage Insights',
+    insights: [
+      {dot:'var(--amber)', text:'5 areas missing Milk Bread — Gomti Nagar & Aishbagh are commercially dense', sub:'→ Prioritise listing in these 2 areas first'},
+      {dot:'var(--green)', text:'15/20 areas listed — 2nd best SKU after Cream Roll', sub:'→ Reaching 18+ is achievable with one listing push'},
+      {dot:'var(--accent)', text:'3.6★ rating — tied best with Bombay Pav among Bran-O SKUs', sub:'→ Strong demand signal to present to JioMart'},
+    ],
+    chips: [
+      {cls:'gchip-blue',  text:'📊 15/20 areas — 75% coverage'},
+      {cls:'gchip-amber', text:'⚠ 5 areas missing'},
+      {cls:'gchip-green', text:'✅ 3.6★ rating — tied best among SKUs'},
+    ],
+    kpis: [
+      {lbl:'Milk Bread Coverage', val:'75', denom:'%',     fill:75, grad:'#5b8fff,#22d48a', note:'5 areas still missing', nc:'var(--accent)'},
+      {lbl:'Areas Listed',        val:'15', denom:'/20',   fill:75, grad:'#5b8fff,#22d48a', note:'Good spread',           nc:'var(--accent)'},
+      {lbl:'Areas Missing',       val:'5',  denom:' zones',fill:25, grad:'#f5a623,#ff5c5c', note:'Fixable with 1 push',   nc:'var(--amber)'},
+      {lbl:'Customer Rating',     val:'3.6',denom:'★',     fill:72, grad:'#5b8fff,#22d48a', note:'Tied best among SKUs',  nc:'var(--green)'},
+      {lbl:'Gap vs Cream Roll',   val:'5',  denom:' zones',fill:25, grad:'#f5a623,#5b8fff', note:'Close to full',         nc:'var(--amber)'},
+    ],
+    viTxt: '<strong>5 missing areas × 2–3 daily orders × ₹30 avg = ₹9,000–13,500 in unrealised monthly Milk Bread revenue.</strong> These are areas where Bran-O already has a distributor relationship — listing is the only missing step.',
+    skuReachTitle: 'Milk Bread — Area by Area',
+    skuReachInsight: 'Milk Bread is 5 areas short of full coverage. All 5 missing zones are areas where Bran-O already lists Cream Roll — a distributor path already exists.',
+    miniStats: [
+      {v:'75%', c:'var(--accent)',l:'Coverage Score'},
+      {v:'5',   c:'var(--amber)', l:'Areas missing'},
+      {v:'15',  c:'var(--green)', l:'Active listings'},
+      {v:'3.6★',c:'var(--green)', l:'Avg rating'},
+    ],
+    gapInsight: '5 missing Milk Bread zones — all have active Cream Roll listings. The distributor relationship exists. Listing push is the only required action.',
+    priorityActions: [
+      {num:'01',title:'Push Milk Bread into 5 Missing Zones',desc:'Gomti Nagar, Aishbagh, Dubagga, Khand 2, Munshipulia. Cream Roll is already listed in all 5 — use same distributor to add Milk Bread.',badge:'pab-week',badgeTxt:'THIS WEEK'},
+      {num:'02',title:'Bundle Milk Bread with Pizza Bread in JioMart Request',desc:'When raising listing tickets for Pizza Breads, include Milk Bread for the 5 missing zones. One conversation, two SKUs unlocked.',badge:'pab-week',badgeTxt:'THIS WEEK'},
+      {num:'03',title:'Track Milk Bread Rating Uplift',desc:'3.6★ is good, but positioning and visibility can push this higher. Request better shelf placement in top-footfall areas.',badge:'pab-month',badgeTxt:'THIS MONTH'},
+    ],
+  },
+  pav: {
+    verdictIcon: '🟠',
+    verdictHeadline: 'Bombay Pav is listed in 65% of Lucknow — but absent from the city\'s most commercially dense zones including Hazratganj and IIM Road.',
+    verdictSub: '13 of 20 areas listed. The 7 missing areas include Lucknow\'s top commercial corridors. No competitor is currently dominating Bombay Pav — this gap can be closed before one does.',
+    verdictBadge: 'Needs Push',
+    verdictBadgeClass: 'vbadge-warn',
+    insLabel: 'Bombay Pav · Coverage Insights',
+    insights: [
+      {dot:'var(--red)',   text:'Bombay Pav missing in Hazratganj & IIM Road — Lucknow\'s top commercial zones', sub:'→ Highest-footfall areas, fastest ROI on listing effort'},
+      {dot:'var(--amber)', text:'7 areas missing — worst coverage after Pizza Breads', sub:'→ Bundle with Pizza Bread listing push for efficiency'},
+      {dot:'var(--green)', text:'No competitor dominating Bombay Pav in missing zones — window is open', sub:'→ Act before Good Morning expands to this SKU category'},
+    ],
+    chips: [
+      {cls:'gchip-amber', text:'⚠ 13/20 areas — 65% coverage'},
+      {cls:'gchip-red',   text:'🔴 Hazratganj & IIM Road missing'},
+      {cls:'gchip-blue',  text:'📊 No competitor in Pav zones yet'},
+    ],
+    kpis: [
+      {lbl:'Bombay Pav Coverage', val:'65', denom:'%',     fill:65, grad:'#f5a623,#5b8fff', note:'7 areas missing',       nc:'var(--amber)'},
+      {lbl:'Areas Listed',        val:'13', denom:'/20',   fill:65, grad:'#f5a623,#5b8fff', note:'Commercial gap exists',  nc:'var(--amber)'},
+      {lbl:'Areas Missing',       val:'7',  denom:' zones',fill:35, grad:'#ff5c5c,#f5a623', note:'Incl. top commercial areas', nc:'var(--red)'},
+      {lbl:'Customer Rating',     val:'3.6',denom:'★',     fill:72, grad:'#f5a623,#22d48a', note:'Tied best among SKUs',   nc:'var(--green)'},
+      {lbl:'Competitor Threat',   val:'Low',denom:'',      fill:20, grad:'#22d48a,#5b8fff', note:'Window still open',      nc:'var(--green)'},
+    ],
+    viTxt: '<strong>Hazratganj alone drives ~8–12% of Lucknow\'s urban FMCG transactions.</strong> Bombay Pav\'s absence there and at IIM Road represents the highest per-zone opportunity loss — these two listings alone can shift the revenue trajectory.',
+    skuReachTitle: 'Bombay Pav — Area by Area',
+    skuReachInsight: 'Bombay Pav is missing from Lucknow\'s most valuable commercial zones. No competitor dominates Pav listings yet — this is a time-sensitive window.',
+    miniStats: [
+      {v:'65%', c:'var(--amber)',l:'Coverage Score'},
+      {v:'7',   c:'var(--red)',  l:'Areas missing'},
+      {v:'13',  c:'var(--green)',l:'Active listings'},
+      {v:'Low', c:'var(--green)',l:'Competitor threat'},
+    ],
+    gapInsight: 'Bombay Pav\'s 7 missing zones include Hazratganj, IIM Road, and Nirala Nagar — high footfall commercial corridors with no current competitor presence for this SKU.',
+    priorityActions: [
+      {num:'01',title:'List Bombay Pav in Hazratganj & IIM Road First',desc:'Highest commercial density zones in Lucknow. These 2 listings will have the fastest and highest demand return.',badge:'pab-now',badgeTxt:'ACT NOW'},
+      {num:'02',title:'Bundle Bombay Pav with Pizza Bread Listing Request',desc:'When escalating to JioMart for Pizza Breads, include Bombay Pav for 7 missing zones. One outreach, dual SKU unlock.',badge:'pab-week',badgeTxt:'THIS WEEK'},
+      {num:'03',title:'Monitor for Competitor Entry in Pav Category',desc:'Good Morning currently doesn\'t dominate Bombay Pav zones. Set a 30-day watch — if they move in, listing urgency upgrades to critical.',badge:'pab-month',badgeTxt:'THIS MONTH'},
+    ],
+  },
+  pizza: {
+    verdictIcon: '🔴',
+    verdictHeadline: 'Pizza Breads — Bran-O\'s highest-rated SKU — is absent from 75% of Lucknow while Good Morning fills the gap in 13 zones.',
+    verdictSub: 'Only 5 of 20 areas have Pizza Breads listed. At 3.7★, it is the highest-demand SKU in the portfolio. This is the most critical listing gap in the entire Bran-O Lucknow operation.',
+    verdictBadge: 'Critical',
+    verdictBadgeClass: 'vbadge-critical',
+    insLabel: 'Pizza Breads · CRITICAL Coverage Alert',
+    insights: [
+      {dot:'var(--red)',   text:'Only 5/20 areas listed — 15 zones have zero Bran-O Pizza Bread presence', sub:'→ Highest-rated SKU with worst distribution'},
+      {dot:'var(--red)',   text:'Good Morning is present in 13 of the 15 missing areas — actively capturing demand', sub:'→ Every unlisted day = competitor revenue compounding'},
+      {dot:'var(--amber)', text:'Pizza Bread is listed in 4 "Khand/Dubagga" type zones — not the commercial hubs', sub:'→ Gomti Nagar, Hazratganj, Indira Nagar are the priority targets'},
+    ],
+    chips: [
+      {cls:'gchip-red',   text:'🔴 Only 5/20 — 25% coverage'},
+      {cls:'gchip-red',   text:'🔴 Good Morning in 13 missing zones'},
+      {cls:'gchip-green', text:'✅ 3.7★ — highest rated SKU'},
+    ],
+    kpis: [
+      {lbl:'Pizza Bread Coverage',val:'25', denom:'%',     fill:25, grad:'#ff5c5c,#f5a623', note:'⚠ Critical — 15 areas missing', nc:'var(--red)'},
+      {lbl:'Areas Listed',        val:'5',  denom:'/20',   fill:25, grad:'#ff5c5c,#f5a623', note:'Dangerously low',               nc:'var(--red)'},
+      {lbl:'Areas Missing',       val:'15', denom:' zones',fill:75, grad:'#ff5c5c,#f5a623', note:'Immediate action required',     nc:'var(--red)'},
+      {lbl:'Customer Rating',     val:'3.7',denom:'★',     fill:74, grad:'#22d48a,#5b8fff', note:'Highest among all SKUs',        nc:'var(--green)'},
+      {lbl:'Competitor Zones',    val:'13', denom:' zones',fill:65, grad:'#ff5c5c,#f5a623', note:'Good Morning dominating',       nc:'var(--red)'},
+    ],
+    viTxt: '<strong>Good Morning occupies 13 zones where Bran-O\'s best SKU is absent.</strong> At 3.7★, Pizza Breads would likely outsell Good Morning\'s offering where listed — the product wins on quality, but loses by not showing up.',
+    skuReachTitle: 'Pizza Breads — Area by Area',
+    skuReachInsight: 'Pizza Breads have the lowest reach (5/20) despite being the highest rated SKU (3.7★). Good Morning is present in 13 of the 15 missing zones — active competitor capture is underway.',
+    miniStats: [
+      {v:'25%', c:'var(--red)',  l:'Coverage Score'},
+      {v:'15',  c:'var(--red)',  l:'Areas missing'},
+      {v:'13',  c:'var(--red)',  l:'Competitor zones'},
+      {v:'3.7★',c:'var(--green)',l:'Rating — #1 SKU'},
+    ],
+    gapInsight: 'Pizza Bread is missing from 15 zones. Good Morning is already listed in 13 of them. The longer listing is delayed, the deeper the competitor gets into customer habits.',
+    priorityActions: [
+      {num:'01',title:'Raise JioMart Listing Tickets for All 15 Missing Zones Today',desc:'Do not batch or delay. 15 individual or bulk listing requests to JioMart. Good Morning is already there — every hour matters.',badge:'pab-now',badgeTxt:'ACT NOW'},
+      {num:'02',title:'Target Gomti Nagar, Indira Nagar & Hazratganj First',desc:'Highest-footfall zones in Lucknow. Even partial wins in these 3 areas will produce outsized revenue returns.',badge:'pab-now',badgeTxt:'ACT NOW'},
+      {num:'03',title:'Use 3.7★ Rating as the Listing Pitch to JioMart',desc:'Pizza Breads have the highest customer rating in the portfolio. Present this data to JioMart as the primary reason to fast-track listing approval.',badge:'pab-week',badgeTxt:'THIS WEEK'},
+    ],
+  },
+};
+
+// ─── THEME ───
+function toggleTheme(){
+  darkMode = !darkMode;
+  document.documentElement.setAttribute('data-theme', darkMode?'':'light');
+  document.getElementById('theme-btn').textContent = darkMode?'☀ Light Mode':'🌙 Dark Mode';
+  rebuildCharts();
+}
+
+// ─── PRODUCT FILTER ───
+function setProduct(prod){
+  activeProd = prod;
+
+  // Update button states
+  const btns = {all:'active-all',cream:'active-green',milk:'active-blue',pav:'active-amber',pizza:'active-red'};
+  Object.keys(btns).forEach(k=>{
+    const el = document.getElementById('btn-'+k);
+    el.className = 'prod-btn' + (k===prod?' '+btns[k]:'');
+  });
+
+  const cfg = prodConfig[prod];
+
+  // Verdict
+  document.getElementById('verdict-icon').textContent = cfg.verdictIcon;
+  document.getElementById('verdict-headline').textContent = cfg.verdictHeadline;
+  document.getElementById('verdict-sub').textContent = cfg.verdictSub;
+  const vb = document.getElementById('verdict-badge');
+  vb.textContent = cfg.verdictBadge;
+  vb.className = 'verdict-badge ' + cfg.verdictBadgeClass;
+
+  // Insights bar
+  document.getElementById('ins-lbl').textContent = cfg.insLabel;
+  document.getElementById('ins-cards').innerHTML = cfg.insights.map(i=>
+    `<div class="ins-item"><div class="ins-dot" style="background:${i.dot}"></div><div><div class="ins-text">${i.text}</div><div class="ins-sub">${i.sub}</div></div></div>`
+  ).join('');
+
+  // Growth chips
+  document.getElementById('growth-chips').innerHTML = cfg.chips.map(c=>
+    `<div class="gchip ${c.cls}">${c.text}</div>`
+  ).join('');
+
+  // KPIs
+  const grid = document.getElementById('kpi-grid');
+  grid.innerHTML = cfg.kpis.map(k=>`
+    <div class="kpi">
+      <div class="kpi-lbl">${k.lbl}</div>
+      <div class="kpi-val">${k.val}<span class="kpi-denom">${k.denom}</span></div>
+      <div class="kpi-track"><div class="kpi-fill" data-w="${k.fill}%" style="width:0;background:linear-gradient(90deg,${k.grad})"></div></div>
+      <div class="kpi-note" style="color:${k.nc}">${k.note}</div>
+    </div>`).join('');
+
+  // Value insight
+  document.getElementById('vi-txt').innerHTML = cfg.viTxt;
+
+  // SKU Reach panel
+  document.getElementById('sku-reach-title').textContent = cfg.skuReachTitle;
+  document.getElementById('sku-reach-insight-txt').textContent = cfg.skuReachInsight;
+  renderSkuReach(prod);
+
+  // Mini grid
+  const mg = document.getElementById('mini-grid');
+  mg.innerHTML = cfg.miniStats.map(m=>
+    `<div class="mini"><div class="mini-v" style="color:${m.c}">${m.v}</div><div class="mini-l">${m.l}</div></div>`
+  ).join('');
+
+  // Gap insight
+  document.getElementById('gap-insight-txt').textContent = cfg.gapInsight;
+
+  // Priority actions top bar
+  document.getElementById('priority-actions-row').innerHTML = cfg.priorityActions.map(a=>`
+    <div class="pa-card">
+      <div class="pa-num">${a.num}</div>
+      <div class="pa-body">
+        <div class="pa-title">${a.title}</div>
+        <div class="pa-desc">${a.desc}</div>
+        <span class="pa-badge ${a.badge}">${a.badgeTxt}</span>
+      </div>
+    </div>`).join('');
+
+  // Table
+  renderTable();
+
+  // Heatmap highlight
+  renderHeatmap(prod);
+
+  // Animate bars
+  setTimeout(()=>{
+    document.querySelectorAll('[data-w]').forEach(el=>{ el.style.width=el.dataset.w; });
+  }, 80);
+
+  // Rebuild charts
+  rebuildCharts();
+}
+
+// ─── SKU REACH PANEL ───
+function renderSkuReach(prod){
+  const allSkus = [
+    {key:'cream', label:'Cream Roll',   listed:20, total:20, color:'var(--green)',  pct:100},
+    {key:'milk',  label:'Milk Bread',   listed:15, total:20, color:'var(--accent)', pct:75},
+    {key:'pav',   label:'Bombay Pav',   listed:13, total:20, color:'var(--amber)',  pct:65},
+    {key:'pizza', label:'Pizza Breads', listed:5,  total:20, color:'var(--red)',    pct:25},
+  ];
+  const rows = prod==='all' ? allSkus : allSkus.filter(s=>s.key===prod);
+  document.getElementById('sku-reach-rows').innerHTML = rows.map(s=>`
+    <div class="plat-row">
+      <div class="plat-name" style="color:${s.color}">${s.label}</div>
+      <div class="plat-track"><div class="plat-segs"><div class="seg sg" data-w="${s.pct}%" style="width:0;background:${s.color}"></div></div></div>
+      <div class="plat-stat">${s.listed} / ${s.total} areas</div>
+    </div>`).join('');
+}
+
+// ─── TABLE ───
+function renderTable(){
+  const q = (document.getElementById('area-search')?.value||'').toLowerCase();
+  let rows = areas.filter(r=>{
+    if(q && !r.name.toLowerCase().includes(q) && !r.pin.includes(q)) return false;
+    if(activeProd!=='all'){
+      if(filterVal==='full') return r[activeProd]==='Y';
+      if(filterVal==='gap')  return r[activeProd]==='N';
+      return true;
+    }
+    const score = skuKeys.filter(k=>r[k]==='Y').length;
+    if(filterVal==='full') return score===4;
+    if(filterVal==='gap')  return score<4;
+    return true;
+  });
+
+  if(activeProd!=='all'){
+    // Single product view — highlight that column
+    document.getElementById('table-head').innerHTML = `<tr>
+      <th>PIN</th><th>Area</th>
+      <th class="tc" style="color:var(--accent)">${skuLabels[activeProd]}</th>
+      <th>Score</th>
+    </tr>`;
+    document.getElementById('table-title').textContent = skuLabels[activeProd]+' — Area Coverage';
+    document.getElementById('main-tbody').innerHTML = rows.map(r=>{
+      const listed = r[activeProd]==='Y';
+      return `<tr>
+        <td><div class="pin">${r.pin}</div></td>
+        <td><div class="aname">${r.name}</div></td>
+        <td style="text-align:center">${chipHTML(r[activeProd])}</td>
+        <td><div class="sdots"><div class="sd" style="background:${listed?'var(--green)':'var(--red)'}"></div></div></td>
+      </tr>`;
+    }).join('');
+  } else {
+    document.getElementById('table-head').innerHTML = `<tr>
+      <th>PIN</th><th>Area</th>
+      <th class="tc">Milk Bread</th><th class="tc">Bombay Pav</th><th class="tc">Cream Roll</th><th class="tc">Pizza Bread</th>
+      <th>Score</th>
+    </tr>`;
+    document.getElementById('table-title').textContent = 'Area × Product Coverage';
+    document.getElementById('main-tbody').innerHTML = rows.map(r=>{
+      const score = skuKeys.filter(k=>r[k]==='Y').length;
+      const dotColor = score===4?'var(--green)':score===3?'var(--accent)':score===2?'var(--amber)':'var(--red)';
+      return `<tr>
+        <td><div class="pin">${r.pin}</div></td>
+        <td><div class="aname">${r.name}</div></td>
+        ${skuKeys.map(k=>`<td style="text-align:center">${chipHTML(r[k])}</td>`).join('')}
+        <td><div class="sdots">${[0,1,2,3].map(i=>`<div class="sd" style="background:${i<score?dotColor:'rgba(128,128,128,0.18)'}"></div>`).join('')}</div></td>
+      </tr>`;
+    }).join('');
+  }
+}
+function setFilter(val,btn){ filterVal=val; renderTable(); }
+function chipHTML(v){ return v==='Y'?`<span class="chip cy">Y</span>`:`<span class="chip cn">N</span>`; }
+
+// ─── HEATMAP ───
+function renderHeatmap(activeSku){
+  const grid = document.getElementById('hm-grid');
+  grid.querySelectorAll('.hm-lbl,.hm-cell').forEach(e=>e.remove());
+  areas.forEach(r=>{
+    const lbl = document.createElement('div');
+    lbl.className='hm-lbl';
+    lbl.textContent=r.name.split('/')[0].trim().substring(0,14);
+    grid.appendChild(lbl);
+    skuKeys.forEach((k,i)=>{
+      const cell = document.createElement('div');
+      const isTarget = activeSku && activeSku!=='all' && k===activeSku;
+      const isDim = activeSku && activeSku!=='all' && k!==activeSku;
+      let cls = 'hm-cell ';
+      if(isDim){ cls += 'hm-dim'; }
+      else if(isTarget){ cls += r[k]==='Y'?'hm-highlight-listed':'hm-highlight-miss'; }
+      else { cls += r[k]==='Y'?'hmy':'hmn'; }
+      cell.className = cls;
+      cell.textContent = r[k]==='Y'?'Y':'N';
+      const sn=['Milk Bread','Bombay Pav','Cream Roll','Pizza Breads'][i];
+      cell.addEventListener('mouseover',e=>showTT(e,`${r.name}\n${sn}: ${r[k]==='Y'?'Listed':'Not Listed'}`));
+      cell.addEventListener('mouseleave',hideTT);
+      grid.appendChild(cell);
+    });
+  });
+}
+
+// ─── GAP RANK LIST ───
+function renderGapRankList(){
+  const gapData = [
+    {name:'Hazratganj / GPO',g:2},{name:'Gomti Nagar',g:2},{name:'Aishbagh',g:2},
+    {name:'Dubagga',g:2},{name:'Khand 2/Kamta',g:2},{name:'Munshipulia',g:2},
+    {name:'IIM Road',g:2},{name:'Nirala Nagar',g:2},
+    {name:'Jankipuram Ext.',g:1},{name:'Indira Nagar',g:1},{name:'Aminabad',g:1},
+  ];
+  document.getElementById('gap-rank-list').innerHTML = gapData.map(d=>{
+    const c = d.g===2?'var(--red)':d.g===1?'var(--amber)':'var(--green)';
+    return `<div class="rank-row">
+      <div class="rank-lbl">${d.name}</div>
+      <div class="rank-track"><div class="rank-fill" data-w="${d.g/2*100}%" style="width:0;background:${c}"></div></div>
+      <div class="rank-val" style="color:${c}">${d.g}</div>
+    </div>`;
+  }).join('');
+}
+
+// ─── GAP TRACKER ───
+function renderGapTracker(){
+  const gaps = [
+    {sku:'Pizza Breads (3.7★)', areas:['Jankipuram Ext.','Hazratganj / GPO','Gomti Nagar','Indira Nagar','Aminabad','Alambagh','Talkatora','Arjunganj','Kursi Rd Gurumba','Adil Nagar','Aliganj Sec-A','Rajajipuram','Jail Rd Bazar','IIM Road','Nirala Nagar'], color:'var(--red)', tagcls:'badge-now'},
+    {sku:'Bombay Pav (3.6★)',   areas:['Hazratganj / GPO','Gomti Nagar','Aishbagh','Dubagga','Khand 2/Kamta','Munshipulia','IIM Road','Nirala Nagar'], color:'var(--amber)', tagcls:'badge-week'},
+    {sku:'Milk Bread (3.6★)',   areas:['Gomti Nagar','Aishbagh','Dubagga','Khand 2/Kamta','Munshipulia'], color:'var(--accent)', tagcls:'badge-month'},
+  ];
+  document.getElementById('gap-tracker').innerHTML = gaps.map(g=>`
+    <div class="alert-item">
+      <div class="a-sku" style="color:${g.color}">${g.sku}</div>
+      <div class="a-loc">${g.areas.slice(0,3).join(', ')}${g.areas.length>3?` +${g.areas.length-3} more`:''}</div>
+      <div class="a-tag ${g.tagcls}">${g.areas.length} areas</div>
+    </div>`).join('');
+}
+
+// ─── CHART COLORS ───
+function gc(){
+  return {
+    green:  darkMode?'#22d48a':'#16a34a',
+    amber:  darkMode?'#f5a623':'#b45309',
+    accent: darkMode?'#5b8fff':'#2563eb',
+    red:    darkMode?'#ff5c5c':'#dc2626',
+    txt2:   darkMode?'#7a8295':'#4b5a72',
+    txt3:   darkMode?'#4a5168':'#9aa3b2',
+    grid:   darkMode?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)',
+    card:   darkMode?'#181c28':'#fff',
+    border: darkMode?'rgba(255,255,255,0.13)':'rgba(0,0,0,0.1)',
+  };
+}
+
+function rebuildCharts(){
+  charts.forEach(c=>c.destroy()); charts=[];
+  const c = gc();
+  const tt_opts = {backgroundColor:c.card,borderColor:c.border,borderWidth:1,titleColor:c.txt2,bodyColor:c.txt2};
+
+  // c1 — SKU Coverage bar
+  const skuData = activeProd==='all'
+    ? {labels:['Cream Roll (3.5★)','Milk Bread (3.6★)','Bombay Pav (3.6★)','Pizza Breads (3.7★)'],
+       listed:[20,15,13,5], notListed:[0,5,7,15],
+       colors:[c.green+'aa',c.accent+'aa',c.amber+'aa',c.red+'aa']}
+    : {
+        cream:{labels:['Cream Roll (3.5★)'],listed:[20],notListed:[0],colors:[c.green+'aa']},
+        milk: {labels:['Milk Bread (3.6★)'], listed:[15],notListed:[5],colors:[c.accent+'aa']},
+        pav:  {labels:['Bombay Pav (3.6★)'],listed:[13],notListed:[7],colors:[c.amber+'aa']},
+        pizza:{labels:['Pizza Breads (3.7★)'],listed:[5],notListed:[15],colors:[c.red+'aa']},
+      }[activeProd];
+
+  charts.push(new Chart(document.getElementById('c1'),{
+    type:'bar',
+    data:{
+      labels: skuData.labels,
+      datasets:[
+        {label:'Listed',    data:skuData.listed,    backgroundColor:skuData.colors, borderRadius:4,borderSkipped:false},
+        {label:'Not Listed',data:skuData.notListed, backgroundColor:darkMode?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)', borderRadius:4,borderSkipped:false},
+      ]
+    },
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{...tt_opts,callbacks:{label:ctx=>` ${ctx.parsed.x}/20 areas`}}},
+      scales:{
+        x:{stacked:true,max:20,ticks:{color:c.txt3,font:{size:9,family:'DM Mono'},stepSize:5},grid:{color:c.grid},border:{display:false}},
+        y:{stacked:true,ticks:{color:c.txt3,font:{size:9,family:'DM Mono'},maxRotation:0},grid:{display:false},border:{display:false}}
+      }
+    }
+  }));
+
+  // c2 — Push priority bar
+  let pd;
+  if(activeProd==='all'){
+    pd = [
+      ...areas.filter(a=>skuKeys.filter(k=>a[k]==='Y').length<3).map(a=>({n:a.name.split('/')[0].substring(0,16),s:skuKeys.filter(k=>a[k]==='Y').length})),
+      ...areas.filter(a=>skuKeys.filter(k=>a[k]==='Y').length===3).map(a=>({n:a.name.split('/')[0].substring(0,16),s:3})),
+      {n:'BBD Univ.',s:4}
+    ].sort((a,b)=>a.s-b.s);
+  } else {
+    pd = areas.map(a=>({n:a.name.split('/')[0].substring(0,16),s:a[activeProd]==='Y'?1:0})).sort((a,b)=>a.s-b.s);
+  }
+  const pColors = activeProd==='all'
+    ? pd.map(d=>d.s===4?c.green+'aa':d.s===3?c.amber+'aa':c.red+'aa')
+    : pd.map(d=>d.s===1?c.green+'aa':c.red+'aa');
+
+  charts.push(new Chart(document.getElementById('c2'),{
+    type:'bar',
+    data:{labels:pd.map(d=>d.n),datasets:[{label:activeProd==='all'?'Coverage Score':'Listed (1) / Missing (0)',data:pd.map(d=>d.s),backgroundColor:pColors,borderRadius:4,borderSkipped:false}]},
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{...tt_opts,callbacks:{label:ctx=>activeProd==='all'?` ${ctx.parsed.x}/4 SKUs listed`:` ${ctx.parsed.x===1?'Listed':'Not Listed'}`}}},
+      scales:{
+        x:{max:activeProd==='all'?4:1,ticks:{color:c.txt3,font:{size:9,family:'DM Mono'},stepSize:1},grid:{color:c.grid},border:{display:false}},
+        y:{ticks:{color:c.txt3,font:{size:9,family:'DM Mono'},maxRotation:0},grid:{display:false},border:{display:false}}
+      }
+    }
+  }));
+
+  // c3 — Competitor donut
+  charts.push(new Chart(document.getElementById('c3'),{
+    type:'doughnut',
+    data:{
+      labels:['Good Morning listed, Bran-O absent','Bran-O Pizza listed','Neither listed'],
+      datasets:[{data:[13,5,2],backgroundColor:[c.red+'99',c.green+'99',darkMode?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)'],borderColor:[c.red,c.green,darkMode?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.1)'],borderWidth:2}]
+    },
+    options:{
+      cutout:'65%',
+      plugins:{legend:{display:false},tooltip:{...tt_opts,callbacks:{label:ctx=>` ${ctx.parsed} areas`}}}
+    }
+  }));
+}
+
+// ─── ANIMATE BARS ───
+function animateBars(){
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('[data-w]').forEach(el=>{ el.style.width=el.dataset.w; });
+  });
+}
+
+// ─── TOOLTIP ───
+const ttEl=document.getElementById('tt');
+function showTT(e,txt){ttEl.innerHTML=txt.replace('\n','<br>');ttEl.classList.add('show');moveTT(e);}
+function hideTT(){ttEl.classList.remove('show');}
+document.addEventListener('mousemove',e=>{if(ttEl.classList.contains('show'))moveTT(e);});
+function moveTT(e){ttEl.style.left=(e.clientX+14)+'px';ttEl.style.top=(e.clientY-8)+'px';}
+
+// ─── INIT ───
+setProduct('all');
+renderGapRankList();
+renderGapTracker();
+setTimeout(animateBars,350);
+</script>
+</body>
+</html>
